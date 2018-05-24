@@ -12,6 +12,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String TABLE_NAME = "Contact2018_table";
     public static final String ID = "ID";
     public static final String COLUMN_NAME_CONTACT = "contact";
+    public static final String COLUMN_NAME_ADDRESS = "address";
+    public static final String COLUMN_NAME_NUMBER = "phone";
+
 
     public static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE " + TABLE_NAME + " (" +
@@ -21,7 +24,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     public DataBaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        SQLiteDatabase db = this.getWritableDatabase(); //for initial test of db creation
+
         Log.d("MyContactApp", "Databasehelper: constructed DataBasehelper");
     }
 
@@ -37,12 +40,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.execSQL(SQL_DELETE_ENTRIES);
         onCreate(db);
     }
-    public boolean insertData(String name){
+    public boolean insertData(String name, String address, String  number){
         Log.d("MyContactApp", "Databasehelper: inserting data");
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValue = new ContentValues();
         contentValue.put(COLUMN_NAME_CONTACT, name);
+        contentValue.put(COLUMN_NAME_ADDRESS, address);
+        contentValue.put(COLUMN_NAME_NUMBER, number);
         long result = db.insert(TABLE_NAME, null, contentValue);
+
         if(result == -1){
             Log.d("MyContactApp", "Databasehelper: contact insert failed");
             return false;
