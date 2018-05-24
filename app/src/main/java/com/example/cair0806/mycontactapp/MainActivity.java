@@ -8,7 +8,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    com.example.cair0806.mycontactsappp1.DataBaseHelper myDb;
+    DataBaseHelper myDb;
 
 
     @Override
@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        myDb = new com.example.cair0806.mycontactsappp1.DataBaseHelper(this);
+        myDb = new DataBaseHelper(this);
         Log.d("MyContactApp", "MainActivity: instantiated DataBasehelper");
     }
 }

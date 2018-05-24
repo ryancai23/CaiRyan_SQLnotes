@@ -1,4 +1,4 @@
-package com.example.cair0806.mycontactsappp1;
+package com.example.cair0806.mycontactapp;
 
 import android.content.ContentValues;
 import android.content.Context;
