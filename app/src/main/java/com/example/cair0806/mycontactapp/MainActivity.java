@@ -1,5 +1,6 @@
 package com.example.cair0806.mycontactapp;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -10,7 +11,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-
 
 
     DataBaseHelper myDb;
@@ -31,27 +31,26 @@ public class MainActivity extends AppCompatActivity {
         Log.d("MyContactApp", "MainActivity: instantiated DataBasehelper");
     }
 
-    public void addData(View view){
+    public void addData(View view) {
         Log.d("MyContactApp", "MainActivity: add contact button pressed");
 
         boolean isInserted = myDb.insertData(editName.getText().toString(), editAddress.getText().toString(), editNumber.getText().toString());
-        if(isInserted == true){
+        if (isInserted == true) {
             Toast.makeText(MainActivity.this, "success - contact inserted", Toast.LENGTH_LONG).show();
-        }
-        else
-        {
+        } else {
             Toast.makeText(MainActivity.this, "failed - contact not inserted", Toast.LENGTH_LONG).show();
         }
     }
-    public void viewData(View view){
+
+    public void viewData(View view) {
         Cursor res = myDb.getAllData();
         Log.d("MyContactApp", "MainActivity: viewData: received cursor " + res.getCount());
-        if(res.getCount() == 0){
+        if (res.getCount() == 0) {
             showMessage("Error", "No data found in database");
 
         }
         StringBuffer buffer = new StringBuffer();
-        while(res.moveToNext()){
+        while (res.moveToNext()) {
             //append res column 0,1,2,3 to the string buffer, delimited by the "/n"
             buffer.append("ID: " + res.getString(0));
             buffer.append("\n");
@@ -74,6 +73,14 @@ public class MainActivity extends AppCompatActivity {
         builder.setTitle(title);
         builder.setMessage(messages);
         builder.show();
+
+    }
+    public static final String EXTRA_MESSAGE = "com.example.cair0806.mycontactapp.MESSAGE";
+    public void searchRecord(View view){
+        Log.d("MyContactApp", "MainActivity:launching searchActivity");
+        Intent intent = new Intent(this, SearchActivity.class);
+        intent.putExtra(EXTRA_MESSAGE, editName.getText().toString());
+        startActivity(intent);
     }
 }
 
