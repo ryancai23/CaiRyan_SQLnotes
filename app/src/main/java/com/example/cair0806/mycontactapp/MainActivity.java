@@ -50,16 +50,20 @@ public class MainActivity extends AppCompatActivity {
 
         }
         StringBuffer buffer = new StringBuffer();
+
         while (res.moveToNext()) {
+
+                buffer.append("ID: " + res.getString(0));
+                buffer.append("\n");
+                buffer.append("name: " + res.getString(1));
+                buffer.append("\n");
+                buffer.append("address: " + res.getString(2));
+                buffer.append("\n");
+                buffer.append("number: " + res.getString(3));
+                buffer.append("\n");
+
             //append res column 0,1,2,3 to the string buffer, delimited by the "/n"
-            buffer.append("ID: " + res.getString(0));
-            buffer.append("\n");
-            buffer.append("name: " + res.getString(1));
-            buffer.append("\n");
-            buffer.append("address: " + res.getString(2));
-            buffer.append("\n");
-            buffer.append("number: " + res.getString(3));
-            buffer.append("\n");
+
         }
         Log.d("MyContactApp", "MainActivity: viewData: assembled string buffer");
         showMessage("Data", buffer.toString());
@@ -76,10 +80,30 @@ public class MainActivity extends AppCompatActivity {
 
     }
     public static final String EXTRA_MESSAGE = "com.example.cair0806.mycontactapp.MESSAGE";
-    public void searchRecord(View view){
+    public void searchRecord(View view) {
+
         Log.d("MyContactApp", "MainActivity:launching searchActivity");
+        Cursor res = myDb.getAllData();
         Intent intent = new Intent(this, SearchActivity.class);
-        intent.putExtra(EXTRA_MESSAGE, editName.getText().toString());
+
+        StringBuffer buffer = new StringBuffer();
+        if (res.getCount() == 0) {
+            return;
+        }
+        while (res.moveToNext()) {
+            if (res.getString(1).equals(editName.getText().toString())) {
+                buffer.append("ID: " + res.getString(0));
+                buffer.append("\n");
+                buffer.append("name: " + res.getString(1));
+                buffer.append("\n");
+                buffer.append("address: " + res.getString(2));
+                buffer.append("\n");
+                buffer.append("number: " + res.getString(3));
+                buffer.append("\n");
+            }
+
+        }
+        intent.putExtra(EXTRA_MESSAGE, buffer.toString());
         startActivity(intent);
     }
 }
