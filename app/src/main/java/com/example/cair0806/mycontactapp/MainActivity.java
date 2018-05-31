@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         }
         Log.d("MyContactApp", "MainActivity: viewData: assembled string buffer");
         showMessage("Data", buffer.toString());
+
     }
 
     public void showMessage(String title, String messages) {
@@ -87,9 +88,8 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, SearchActivity.class);
 
         StringBuffer buffer = new StringBuffer();
-        if (res.getCount() == 0) {
-            return;
-        }
+        int lol = res.getCount();
+        int c  = 0;
         while (res.moveToNext()) {
             if (res.getString(1).equals(editName.getText().toString())) {
                 buffer.append("ID: " + res.getString(0));
@@ -101,7 +101,13 @@ public class MainActivity extends AppCompatActivity {
                 buffer.append("number: " + res.getString(3));
                 buffer.append("\n");
             }
+            else{
+                c++;
+            }
 
+        }
+        if(c == lol) {
+            buffer.append("no contact found");
         }
         intent.putExtra(EXTRA_MESSAGE, buffer.toString());
         startActivity(intent);
